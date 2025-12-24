@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const productSlice = createSlice({
-  name: "Product",
+  name: "products",
   initialState: {
     loading: false,
     error: null,
