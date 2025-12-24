@@ -75,3 +75,4 @@ export const getAllProducts = (data) => async (dispatch) => {
       );
     });
 };
+export default productSlice.reducer;
