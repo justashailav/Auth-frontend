@@ -25,7 +25,7 @@ const productSlice = createSlice({
     getAllProductsSuccess(state, action) {
       (state.loading = false), state.productList = action.payload;
     },
-    getAllProductsSuccess(state, action) {
+    getAllProductsFailed(state, action) {
       (state.loading = false), (state.error = action.payload);
     },
   },
@@ -54,7 +54,7 @@ export const addProduct = (data) => async (dispatch) => {
 };
 
 export const getAllProducts = (data) => async (dispatch) => {
-  dispatch(productSlice.actions.register());
+  dispatch(productSlice.actions.getAllProducts());
   await axios
     .post(
       `${import.meta.env.VITE_API_BASE_URL}/api/v1/product/getAllProducts`,
@@ -67,11 +67,11 @@ export const getAllProducts = (data) => async (dispatch) => {
       }
     )
     .then((res) => {
-      dispatch(productSlice.actions.registerSuccess(res.data));
+      dispatch(productSlice.actions.getAllProductsSuccess(res.data));
     })
     .catch((error) => {
       dispatch(
-        productSlice.actions.registerFailed(error.response.data.message)
+        productSlice.actions.getAllProductsFailed(error.response.data.message)
       );
     });
 };
