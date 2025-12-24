@@ -71,11 +71,14 @@ export default function AdminProducts() {
     setOpenModal(true);
   };
 
-  const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this product?")) {
-      dispatch(deleteProduct(id));
-    }
-  };
+ const handleDelete = (id) => {
+  if (window.confirm("Are you sure you want to delete this product?")) {
+    dispatch(deleteProduct(id)).then(() => {
+      dispatch(getAllProducts());
+    });
+  }
+};
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
