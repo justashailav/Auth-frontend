@@ -6,18 +6,11 @@ export default function AdminLayout() {
   return (
     <div className="min-h-screen flex bg-[#FFF3EF]">
       
-      {/* Sidebar */}
       <Sidebar />
-
-      {/* Right Section */}
       <div className="flex flex-1 flex-col">
-
-        {/* Header */}
         <div className="sticky top-0 z-30">
           <Header />
         </div>
-
-        {/* Page Content */}
         <main className="flex-1 p-4 md:p-6">
           <div
             className="

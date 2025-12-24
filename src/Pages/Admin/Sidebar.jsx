@@ -21,8 +21,6 @@ export default function Sidebar() {
     { icon: Package, label: "Products", path: "/admin/products" },
     { icon: ClipboardList, label: "Orders", path: "/admin/orders" },
     { icon: Tag, label: "Coupons", path: "/admin/coupons" },
-    { icon: ImageIcon, label: "Gallery", path: "/admin/gallery" },
-    { icon: FaBlog, label: "Blogs", path: "/admin/blog" },
   ];
 
   const MenuLinks = ({ close }) => (
