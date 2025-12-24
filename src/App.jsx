@@ -10,12 +10,13 @@ import ResetPassword from "./components/ResetPassword";
 
 import AdminLayout from "./Pages/Admin/AdminLayout";
 import AdminDashboard from "./Pages/Admin/AdminDashboard";
-import { Product } from "../../backend/models/productModel";
+import AdminProducts from "./Pages/Admin/Products";
+
 
 function App() {
   const location = useLocation();
 
-  // 👇 Hide Navbar on admin routes
+
   const isAdminRoute = location.pathname.startsWith("/admin");
 
   return (
@@ -33,7 +34,7 @@ function App() {
 
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="dashboard" element={<AdminDashboard />} />
-          <Route path="products" element={<Product />} />
+          <Route path="products" element={<AdminProducts />} />
         </Route>
       </Routes>
     </>
