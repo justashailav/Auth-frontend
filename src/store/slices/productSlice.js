@@ -132,7 +132,7 @@ export const deleteProduct = (id) => async (dispatch) => {
     .delete(
       `${
         import.meta.env.VITE_API_BASE_URL
-      }/api/v1/product/create-product/${id}`,
+      }/api/v1/product/delete-product/${id}`,
       {
         withCredentials: true,
       }
