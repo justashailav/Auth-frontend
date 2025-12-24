@@ -10,6 +10,7 @@ import ResetPassword from "./components/ResetPassword";
 
 import AdminLayout from "./Pages/Admin/AdminLayout";
 import AdminDashboard from "./Pages/Admin/AdminDashboard";
+import { Product } from "../../backend/models/productModel";
 
 function App() {
   const location = useLocation();
@@ -30,9 +31,9 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/password/reset/:token" element={<ResetPassword />} />
 
-        {/* 🛠 Admin Routes */}
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="products" element={<Product />} />
         </Route>
       </Routes>
     </>

@@ -89,10 +89,8 @@ export default function AdminProducts() {
     dispatch(deleteProduct(id));
   };
 
-  /* ---------------- UI ---------------- */
   return (
     <div className="p-6 max-w-6xl mx-auto">
-      {/* HEADER */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Products</h1>
         <button
@@ -102,12 +100,8 @@ export default function AdminProducts() {
           + Add Product
         </button>
       </div>
-
-      {/* MESSAGES */}
       {error && <p className="text-red-600 mb-4">{error}</p>}
       {message && <p className="text-green-600 mb-4">{message}</p>}
-
-      {/* PRODUCT LIST */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {productList.map((p) => (
           <div
@@ -132,8 +126,6 @@ export default function AdminProducts() {
           </div>
         ))}
       </div>
-
-      {/* ---------- POPUP FORM ---------- */}
       <Modal open={openModal} onClose={() => setOpenModal(false)}>
         <h2 className="text-xl font-semibold mb-4">Add Product</h2>
 
