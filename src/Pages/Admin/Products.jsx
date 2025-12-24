@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addProduct, getAllProducts } from "../../store/slices/productSlice";
 
-
 const Modal = ({ open, onClose, children }) => {
   if (!open) return null;
 
@@ -23,9 +22,12 @@ const Modal = ({ open, onClose, children }) => {
 
 export default function AdminProducts() {
   const dispatch = useDispatch();
-  const { loading, productList, error, message } = useSelector(
-    (state) => state.products
-  );
+  const {
+    loading,
+    productList ,
+    error,
+    message,
+  } = useSelector((state) => state.products || {});
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -35,38 +37,41 @@ export default function AdminProducts() {
     salesPrice: "",
     stock: "",
     category: "",
+    images: [],
   });
 
+ 
   useEffect(() => {
     dispatch(getAllProducts());
   }, [dispatch]);
-
-//   /* ---------------- CLEAR MESSAGE ---------------- */
-//   useEffect(() => {
-//     if (message || error) {
-//       setTimeout(() => {
-//         dispatch(clearMessage());
-//       }, 3000);
-//     }
-//   }, [message, error, dispatch]);
-
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const handleImagesChange = (e) => {
+    setForm({
+      ...form,
+      images: Array.from(e.target.files),
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(
-      addProduct({
-        productName: form.productName,
-        price: Number(form.price),
-        salesPrice: Number(form.salesPrice),
-        stock: Number(form.stock),
-        category: form.category,
-      })
-    );
+    const formData = new FormData();
+    formData.append("productName", form.productName);
+    formData.append("price", Number(form.price));
+    formData.append("salesPrice", Number(form.salesPrice));
+    formData.append("stock", Number(form.stock));
+    formData.append("category", form.category);
+
+    
+    form.images.forEach((img) => {
+      formData.append("images", img);
+    });
+
+    dispatch(addProduct(formData));
 
     setForm({
       productName: "",
@@ -74,17 +79,15 @@ export default function AdminProducts() {
       salesPrice: "",
       stock: "",
       category: "",
+      images: [],
     });
 
     setOpenModal(false);
   };
 
-  const handleDelete = (id) => {
-    dispatch(deleteProduct(id));
-  };
-
   return (
     <div className="p-6 max-w-6xl mx-auto">
+      {/* HEADER */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Products</h1>
         <button
@@ -94,14 +97,26 @@ export default function AdminProducts() {
           + Add Product
         </button>
       </div>
+
+      {/* MESSAGES */}
       {error && <p className="text-red-600 mb-4">{error}</p>}
       {message && <p className="text-green-600 mb-4">{message}</p>}
+
+      {/* PRODUCT LIST */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {productList.map((p) => (
           <div
             key={p._id}
             className="border rounded-lg p-4 shadow-sm bg-white"
           >
+            {p.images && p.images.length > 0 && (
+              <img
+                src={p.images[0]}
+                alt={p.productName}
+                className="w-full h-40 object-cover rounded mb-2"
+              />
+            )}
+
             <h2 className="font-semibold text-lg">{p.productName}</h2>
             <p className="text-sm text-gray-600">{p.category}</p>
 
@@ -110,16 +125,11 @@ export default function AdminProducts() {
               <p>Sale: ₹{p.salesPrice}</p>
               <p>Stock: {p.stock}</p>
             </div>
-
-            <button
-              onClick={() => handleDelete(p._id)}
-              className="mt-4 text-red-600 text-sm hover:underline"
-            >
-              Delete
-            </button>
           </div>
         ))}
       </div>
+
+      {/* MODAL */}
       <Modal open={openModal} onClose={() => setOpenModal(false)}>
         <h2 className="text-xl font-semibold mb-4">Add Product</h2>
 
@@ -173,6 +183,29 @@ export default function AdminProducts() {
             required
             className="w-full border px-4 py-2 rounded"
           />
+
+          {/* IMAGE INPUT */}
+          <input
+            type="file"
+            multiple
+            accept="image/*"
+            onChange={handleImagesChange}
+            className="w-full"
+          />
+
+          {/* IMAGE PREVIEW */}
+          {form.images.length > 0 && (
+            <div className="flex gap-2 flex-wrap">
+              {form.images.map((img, i) => (
+                <img
+                  key={i}
+                  src={URL.createObjectURL(img)}
+                  alt="preview"
+                  className="w-20 h-20 object-cover rounded"
+                />
+              ))}
+            </div>
+          )}
 
           <div className="flex justify-end gap-3">
             <button
