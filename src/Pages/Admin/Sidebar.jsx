@@ -36,7 +36,9 @@ export default function Sidebar() {
             to={path}
             onClick={close}
             className={`
-              flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition
+              group relative flex items-center gap-3
+              rounded-xl px-4 py-2.5 text-sm font-medium
+              transition-all duration-200 ease-out
               ${
                 active
                   ? "bg-[#FFECE8] text-[#C2410C]"
@@ -44,7 +46,22 @@ export default function Sidebar() {
               }
             `}
           >
-            <Icon size={18} />
+            {/* Active Indicator */}
+            <span
+              className={`
+                absolute left-0 top-1/2 -translate-y-1/2
+                h-6 w-1 rounded-r-full
+                transition-all duration-300
+                ${active ? "bg-[#C2410C]" : "bg-transparent"}
+              `}
+            />
+
+            {/* Icon */}
+            <Icon
+              size={18}
+              className="transition-transform duration-200 group-hover:translate-x-1"
+            />
+
             {label}
           </Link>
         );
@@ -57,7 +74,7 @@ export default function Sidebar() {
       {/* 🔹 Mobile Toggle Button */}
       <button
         onClick={() => setOpen(true)}
-        className="lg:hidden fixed top-4 left-4 z-50 bg-white shadow-md rounded-xl p-2"
+        className="lg:hidden fixed top-4 left-4 z-50 bg-white shadow-md rounded-xl p-2 transition hover:scale-105"
       >
         <PanelLeft size={22} />
       </button>
@@ -73,7 +90,8 @@ export default function Sidebar() {
         <div
           onClick={() => setOpen(false)}
           className={`
-            absolute inset-0 bg-black/40 transition-opacity
+            absolute inset-0 bg-black/40
+            transition-all duration-300 ease-out
             ${open ? "opacity-100" : "opacity-0"}
           `}
         />
@@ -82,8 +100,9 @@ export default function Sidebar() {
         <aside
           className={`
             absolute left-0 top-0 h-full w-72 bg-white
-            transform transition-transform duration-300
-            ${open ? "translate-x-0" : "-translate-x-full"}
+            transform transition-all duration-300 ease-out
+            shadow-2xl
+            ${open ? "translate-x-0 scale-100" : "-translate-x-full scale-95"}
           `}
         >
           {/* Header */}
@@ -99,7 +118,7 @@ export default function Sidebar() {
               <span className="text-lg font-bold">Admin Panel</span>
             </div>
             <X
-              className="cursor-pointer"
+              className="cursor-pointer transition hover:rotate-90"
               onClick={() => setOpen(false)}
             />
           </div>
@@ -112,7 +131,13 @@ export default function Sidebar() {
       </div>
 
       {/* 🖥️ Desktop Sidebar */}
-      <aside className="hidden lg:flex lg:w-72 lg:flex-col bg-white border-r px-6 py-6">
+      <aside
+        className="
+          hidden lg:flex lg:w-72 lg:flex-col
+          bg-white border-r px-6 py-6
+          animate-[slideIn_0.4s_ease-out]
+        "
+      >
         <div
           className="mb-8 flex items-center gap-2 cursor-pointer"
           onClick={() => navigate("/admin/dashboard")}
