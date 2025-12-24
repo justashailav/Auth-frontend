@@ -19,8 +19,8 @@ export default function Sidebar() {
   const menuItems = [
     { icon: LayoutDashboardIcon, label: "Dashboard", path: "/admin/dashboard" },
     { icon: Package, label: "Products", path: "/admin/products" },
-    { icon: ClipboardList, label: "Orders", path: "/admin/orders" },
-    { icon: Tag, label: "Coupons", path: "/admin/coupons" },
+    // { icon: ClipboardList, label: "Orders", path: "/admin/orders" },
+    // { icon: Tag, label: "Coupons", path: "/admin/coupons" },
   ];
 
   const MenuLinks = ({ close }) => (
