@@ -37,7 +37,6 @@ export default function AdminProducts() {
     category: "",
   });
 
-  /* ---------------- FETCH PRODUCTS ---------------- */
   useEffect(() => {
     dispatch(getAllProducts());
   }, [dispatch]);

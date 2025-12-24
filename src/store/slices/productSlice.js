@@ -53,12 +53,11 @@ export const addProduct = (data) => async (dispatch) => {
     });
 };
 
-export const getAllProducts = (data) => async (dispatch) => {
+export const getAllProducts = () => async (dispatch) => {
   dispatch(productSlice.actions.getAllProducts());
   await axios
-    .post(
+    .get(
       `${import.meta.env.VITE_API_BASE_URL}/api/v1/product/getAllProducts`,
-      data,
       {
         withCredentials: true,
         headers: {
