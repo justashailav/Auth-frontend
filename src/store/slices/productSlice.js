@@ -105,7 +105,7 @@ export const getAllProducts = () => async (dispatch) => {
     });
 };
 
-export const updateProduct = (data, id) => async (dispatch) => {
+export const updateProduct = ({id,data}) => async (dispatch) => {
   dispatch(productSlice.actions.updateProduct());
   await axios
     .put(

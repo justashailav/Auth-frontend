@@ -7,7 +7,6 @@ import {
   deleteProduct,
 } from "../../store/slices/productSlice";
 
-/* ================= MODAL COMPONENT ================= */
 const Modal = ({ open, onClose, children }) => {
   if (!open) return null;
 
