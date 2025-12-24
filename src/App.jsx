@@ -21,10 +21,12 @@ function App() {
         <Route path="/otp-verification/:email" element={<VerifyOTP/>}/>
         <Route path="/forgot-password" element={<ForgotPassword/>}/>
         <Route path="/password/reset/:token" element={<ResetPassword/>}/>
-      </Routes> 
-      <Route path="/admin" element={<AdminLayout />}>
+
+
+        <Route path="/admin" element={<AdminLayout />}>
           <Route path="dashboard" element={<AdminDashboard />} />
-        </Route>     
+        </Route>  
+      </Routes>    
     </>
     
   )
