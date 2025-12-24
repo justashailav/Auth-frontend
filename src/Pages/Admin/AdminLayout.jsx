@@ -1,7 +1,4 @@
-import React from "react";
 import { Outlet } from "react-router-dom";
-import AdminSidebar from "./AdminSidebar";
-import AdminHeader from "./AdminHeader";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 
