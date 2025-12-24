@@ -19,11 +19,6 @@ const Navbar = () => {
                 Login
               </button>
             </Link>
-            <Link to="/signup">
-              <button className="bg-indigo-600 text-white px-4 py-2 rounded-md">
-                Sign up
-              </button>
-            </Link>
           </div>
           <button
             className="md:hidden text-gray-300 text-xl"
@@ -38,11 +33,6 @@ const Navbar = () => {
           <div className="flex flex-col gap-4 pt-4">
             <Link to="/login">
               <button className="text-gray-300 text-left">Login</button>
-            </Link>
-            <Link to="/signup">
-              <button className="bg-indigo-600 text-white py-2 px-4 rounded-md">
-                Sign up
-              </button>
             </Link>
           </div>
         </div>
