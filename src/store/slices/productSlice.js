@@ -57,8 +57,7 @@ export const getAllProducts = () => async (dispatch) => {
   dispatch(productSlice.actions.getAllProducts());
   await axios
     .get(
-      `${import.meta.env.VITE_API_BASE_URL}/api/v1/product/getAllProducts`,
-      {
+      `${import.meta.env.VITE_API_BASE_URL}/api/v1/product/getAllProducts`,{
         withCredentials: true,
         headers: {
           "Content-Type": "application/json",
@@ -66,7 +65,7 @@ export const getAllProducts = () => async (dispatch) => {
       }
     )
     .then((res) => {
-      dispatch(productSlice.actions.getAllProductsSuccess(res.data));
+      dispatch(productSlice.actions.getAllProductsSuccess(res.data.products));
     })
     .catch((error) => {
       dispatch(
