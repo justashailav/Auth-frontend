@@ -38,9 +38,6 @@ export const addProduct = (data) => async (dispatch) => {
       data,
       {
         withCredentials: true,
-        headers: {
-          "Content-Type": "application/json",
-        },
       }
     )
     .then((res) => {
