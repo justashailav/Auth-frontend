@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addProduct, getAllProducts } from "../../store/slices/productSlice";
+import {
+  addProduct,
+  getAllProducts,
+  updateProduct,
+  deleteProduct,
+} from "../../store/slices/productSlice";
 
+/* ================= MODAL COMPONENT ================= */
 const Modal = ({ open, onClose, children }) => {
   if (!open) return null;
 
@@ -20,16 +26,15 @@ const Modal = ({ open, onClose, children }) => {
   );
 };
 
+/* ================= MAIN COMPONENT ================= */
 export default function AdminProducts() {
   const dispatch = useDispatch();
-  const {
-    loading,
-    productList ,
-    error,
-    message,
-  } = useSelector((state) => state.products || {});
+  const { loading, productList = [], error, message } = useSelector(
+    (state) => state.products || {}
+  );
 
   const [openModal, setOpenModal] = useState(false);
+  const [editingId, setEditingId] = useState(null);
 
   const [form, setForm] = useState({
     productName: "",
@@ -40,20 +45,37 @@ export default function AdminProducts() {
     images: [],
   });
 
- 
+  /* ================= FETCH PRODUCTS ================= */
   useEffect(() => {
     dispatch(getAllProducts());
   }, [dispatch]);
 
+  /* ================= HANDLERS ================= */
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleImagesChange = (e) => {
+    setForm({ ...form, images: Array.from(e.target.files) });
+  };
+
+  const handleEdit = (product) => {
+    setEditingId(product._id);
     setForm({
-      ...form,
-      images: Array.from(e.target.files),
+      productName: product.productName,
+      price: product.price,
+      salesPrice: product.salesPrice,
+      stock: product.stock,
+      category: product.category,
+      images: [],
     });
+    setOpenModal(true);
+  };
+
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this product?")) {
+      dispatch(deleteProduct(id));
+    }
   };
 
   const handleSubmit = (e) => {
@@ -66,12 +88,15 @@ export default function AdminProducts() {
     formData.append("stock", Number(form.stock));
     formData.append("category", form.category);
 
-    
     form.images.forEach((img) => {
       formData.append("images", img);
     });
 
-    dispatch(addProduct(formData));
+    if (editingId) {
+      dispatch(updateProduct({ id: editingId, data: formData }));
+    } else {
+      dispatch(addProduct(formData));
+    }
 
     setForm({
       productName: "",
@@ -82,16 +107,21 @@ export default function AdminProducts() {
       images: [],
     });
 
+    setEditingId(null);
     setOpenModal(false);
   };
 
+  /* ================= UI ================= */
   return (
     <div className="p-6 max-w-6xl mx-auto">
       {/* HEADER */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Products</h1>
         <button
-          onClick={() => setOpenModal(true)}
+          onClick={() => {
+            setEditingId(null);
+            setOpenModal(true);
+          }}
           className="bg-[#F08C7D] text-white px-5 py-2 rounded-lg hover:bg-[#d9746a]"
         >
           + Add Product
@@ -109,7 +139,7 @@ export default function AdminProducts() {
             key={p._id}
             className="border rounded-lg p-4 shadow-sm bg-white"
           >
-            {p.images && p.images.length > 0 && (
+            {p.images?.length > 0 && (
               <img
                 src={p.images[0]}
                 alt={p.productName}
@@ -125,13 +155,30 @@ export default function AdminProducts() {
               <p>Sale: ₹{p.salesPrice}</p>
               <p>Stock: {p.stock}</p>
             </div>
+
+            <div className="flex gap-2 mt-4">
+              <button
+                onClick={() => handleEdit(p)}
+                className="flex-1 border border-blue-500 text-blue-500 px-3 py-1 rounded hover:bg-blue-50"
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => handleDelete(p._id)}
+                className="flex-1 border border-red-500 text-red-500 px-3 py-1 rounded hover:bg-red-50"
+              >
+                Delete
+              </button>
+            </div>
           </div>
         ))}
       </div>
 
       {/* MODAL */}
       <Modal open={openModal} onClose={() => setOpenModal(false)}>
-        <h2 className="text-xl font-semibold mb-4">Add Product</h2>
+        <h2 className="text-xl font-semibold mb-4">
+          {editingId ? "Edit Product" : "Add Product"}
+        </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
@@ -184,7 +231,6 @@ export default function AdminProducts() {
             className="w-full border px-4 py-2 rounded"
           />
 
-          {/* IMAGE INPUT */}
           <input
             type="file"
             multiple
@@ -193,7 +239,6 @@ export default function AdminProducts() {
             className="w-full"
           />
 
-          {/* IMAGE PREVIEW */}
           {form.images.length > 0 && (
             <div className="flex gap-2 flex-wrap">
               {form.images.map((img, i) => (
