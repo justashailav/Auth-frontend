@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addProduct,
-  getAllProduct,
-  deleteProduct,
-  clearMessage,
-} from "@/store/slices/productSlice";
+import { addProduct, getAllProducts } from "../../store/slices/productSlice";
 
-/* ---------------- MODAL ---------------- */
+
 const Modal = ({ open, onClose, children }) => {
   if (!open) return null;
 
@@ -44,19 +39,19 @@ export default function AdminProducts() {
 
   /* ---------------- FETCH PRODUCTS ---------------- */
   useEffect(() => {
-    dispatch(getAllProduct());
+    dispatch(getAllProducts());
   }, [dispatch]);
 
-  /* ---------------- CLEAR MESSAGE ---------------- */
-  useEffect(() => {
-    if (message || error) {
-      setTimeout(() => {
-        dispatch(clearMessage());
-      }, 3000);
-    }
-  }, [message, error, dispatch]);
+//   /* ---------------- CLEAR MESSAGE ---------------- */
+//   useEffect(() => {
+//     if (message || error) {
+//       setTimeout(() => {
+//         dispatch(clearMessage());
+//       }, 3000);
+//     }
+//   }, [message, error, dispatch]);
 
-  /* ---------------- HANDLERS ---------------- */
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
