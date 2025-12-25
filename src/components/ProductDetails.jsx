@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useState } from "react";
 
 export default function ProductDetails() {
   const { id } = useParams();
@@ -8,7 +9,9 @@ export default function ProductDetails() {
     (state) => state.products
   );
 
-  const product = productList.find((p) => p._id === id);
+  const product = productList.find(
+    (p) => String(p._id) === String(id)
+  );
 
   if (!product) {
     return (
@@ -18,33 +21,80 @@ export default function ProductDetails() {
     );
   }
 
+  const images = product.images?.length
+    ? product.images
+    : [product.image];
+
+  const [activeImage, setActiveImage] = useState(images[0]);
+
+  const discount =
+    product.salesPrice &&
+    Math.round(
+      ((product.price - product.salesPrice) / product.price) * 100
+    );
+
   return (
-    <div className="max-w-5xl mx-auto mt-20 px-4">
+    <div className="max-w-5xl mx-auto mt-20 px-4 pb-32">
       <div className="grid md:grid-cols-2 gap-10">
-        {/* IMAGE */}
-        <div className="bg-gray-100 rounded-xl overflow-hidden">
-          <img
-            src={product.image}
-            alt={product.productName}
-            className="w-full h-full object-cover"
-          />
+        {/* LEFT - IMAGES */}
+        <div>
+          {/* MAIN IMAGE */}
+          <div className="bg-gray-100 rounded-xl overflow-hidden mb-4">
+            <img
+              src={activeImage}
+              alt={product.productName}
+              className="w-full h-96 object-cover"
+            />
+          </div>
+
+          {/* THUMBNAILS */}
+          <div className="flex gap-3">
+            {images.map((img, index) => (
+              <button
+                key={index}
+                onClick={() => setActiveImage(img)}
+                className={`h-20 w-20 rounded-lg overflow-hidden border-2 ${
+                  activeImage === img
+                    ? "border-black"
+                    : "border-transparent"
+                }`}
+              >
+                <img
+                  src={img}
+                  alt="thumbnail"
+                  className="h-full w-full object-cover"
+                />
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* DETAILS */}
+        {/* RIGHT - DETAILS */}
         <div>
           <h1 className="text-3xl font-bold text-gray-800">
             {product.productName}
           </h1>
 
-          <p className="text-green-600 text-2xl font-bold mt-4">
-            ₹{product.price}
-          </p>
+          {/* PRICE SECTION */}
+          <div className="mt-4 flex items-center gap-3">
+            <span className="text-3xl font-bold text-green-600">
+              ₹{product.salesPrice || product.price}
+            </span>
 
-          <p className="text-gray-600 mt-6">
-            {product.description || "No description available"}
-          </p>
+            {product.salesPrice && (
+              <>
+                <span className="text-lg text-gray-400 line-through">
+                  ₹{product.price}
+                </span>
 
-          <button className="mt-8 bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition">
+                <span className="text-sm font-semibold text-green-700 bg-green-100 px-2 py-1 rounded">
+                  {discount}% OFF
+                </span>
+              </>
+            )}
+          </div>
+
+          <button className="mt-8 w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 transition">
             Add to Cart
           </button>
         </div>
