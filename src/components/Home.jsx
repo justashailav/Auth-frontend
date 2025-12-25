@@ -10,7 +10,7 @@ export default function Home() {
     dispatch(getAllProducts())
   },[dispatch])
   return (
-     <div>
+     <div className="mt-10">
       <h1>Product List</h1>
 
       {productList.map((product) => (
