@@ -6,9 +6,9 @@ import CartSidebar from "../Pages/User/CartSlidebar";
 
 const Navbar = () => {
   const [openMenu, setOpenMenu] = useState(false);
-  const [openCart, setOpenCart] = useState(false);
 
-  const { cartItems = [] } = useSelector((state) => state.cart);
+
+  const { cartItems,isCartOpen  } = useSelector((state) => state.cart);
 
   return (
     <>
@@ -16,9 +16,9 @@ const Navbar = () => {
         <div className="w-full px-4 sm:px-6">
           <div className="flex h-16 items-center max-w-6xl mx-auto justify-between">
             <Link to="/">
-              <div className="text-white font-bold text-xl">
+              {/* <div className="text-white font-bold text-xl">
                 Auth<span className="text-indigo-400">UI</span>
-              </div>
+              </div> */}
             </Link>
 
             {/* DESKTOP */}
