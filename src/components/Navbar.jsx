@@ -6,9 +6,9 @@ import CartSidebar from "../Pages/User/CartSlidebar";
 
 const Navbar = () => {
   const [openMenu, setOpenMenu] = useState(false);
+  const [openCart, setOpenCart] = useState(false);
 
-
-  const { cartItems,isCartOpen  } = useSelector((state) => state.cart);
+  const { cartItems} = useSelector((state) => state.cart);
 
   return (
     <>
