@@ -22,10 +22,10 @@ const cartSlice = createSlice({
     getCartItems(state) {
       (state.loading = true), (state.error = null);
     },
-    getCartSuccessItems(state, action) {
+    getCartItemsSuccess(state, action) {
       (state.loading = false), (state.cartItems = action.payload);
     },
-    getCartFailedItems(state, action) {
+    getCartItemsFailed(state, action) {
       (state.loading = false), (state.error = action.payload);
     },
   },
