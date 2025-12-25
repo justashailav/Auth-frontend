@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import CartSidebar from "./CartSidebar";
+import CartSidebar from "../Pages/User/CartSlidebar";
+
 
 const Navbar = () => {
   const [openMenu, setOpenMenu] = useState(false);
