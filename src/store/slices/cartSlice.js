@@ -31,20 +31,29 @@ const cartSlice = createSlice({
   },
 });
 
-export const addToCart = (data) => async (dispatch) => {
-  dispatch(cartSlice.actions.addToCart());
-  await axios
-    .post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/cart/add-cart`, data, {
-      withCredentials: true,
-    })
-    .then((res) => {
-      dispatch(cartSlice.actions.addToCartSuccess(res.data));
-    })
-    .catch((error) => {
-      dispatch(
-        cartSlice.actions.addToCartFailed(error.response.data.message)
-      );
-    });
+export const addCart = (product) => async (dispatch) => {
+  try {
+    dispatch(cartSlice.actions.addToCart());
+
+    const payload = {
+      productId: product._id, 
+      quantity: 1,
+    };
+
+    const res = await axios.post(
+      `${import.meta.env.VITE_API_BASE_URL}/api/v1/cart/add-cart`,
+      payload,
+      { withCredentials: true }
+    );
+
+    dispatch(cartSlice.actions.addToCartSuccess(res.data));
+  } catch (error) {
+    dispatch(
+      cartSlice.actions.addToCartFailed(
+        error?.response?.data?.message || "Add to cart failed"
+      )
+    );
+  }
 };
 
 export const getCart = () => async (dispatch) => {

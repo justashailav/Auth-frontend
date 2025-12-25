@@ -1,48 +1,32 @@
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
-import { addToCart } from "../store/slices/cartSlice";
+import { addCart } from "../store/slices/cartSlice";
 
 export default function ProductDetails() {
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  const { productList = [] } = useSelector(
-    (state) => state.products
-  );
+  const { productList = [] } = useSelector((state) => state.products);
 
-  const product = productList.find(
-    (p) => String(p._id) === String(id)
-  );
+  const product = productList.find((p) => String(p._id) === String(id));
 
   if (!product) {
     return (
-      <div className="mt-20 text-center text-gray-500">
-        Product not found
-      </div>
+      <div className="mt-20 text-center text-gray-500">Product not found</div>
     );
   }
 
-  // ✅ MERGE MAIN IMAGE + GALLERY IMAGES
-  const images = [
-    product.image,
-    ...(product.images || []),
-  ];
+  const images = [product.image, ...(product.images || [])];
 
   const [activeImage, setActiveImage] = useState(images[0]);
 
-  // ✅ DISCOUNT CALCULATION
   const discount =
     product.salesPrice &&
-    Math.round(
-      ((product.price - product.salesPrice) / product.price) * 100
-    );
-
-  // ✅ ADD TO CART HANDLER (FIXED)
-const handleAddToCart = () => {
-  dispatch(addToCart(product));
-};
-
+    Math.round(((product.price - product.salesPrice) / product.price) * 100);
+  const handleAddToCart = () => {
+    dispatch(addCart(product));
+  };
 
   return (
     <div className="max-w-5xl mx-auto mt-20 px-4 pb-32">
@@ -63,9 +47,7 @@ const handleAddToCart = () => {
                 key={index}
                 onClick={() => setActiveImage(img)}
                 className={`h-20 w-20 rounded-lg overflow-hidden border-2 transition ${
-                  activeImage === img
-                    ? "border-black"
-                    : "border-transparent"
+                  activeImage === img ? "border-black" : "border-transparent"
                 }`}
               >
                 <img
