@@ -21,12 +21,15 @@ export default function ProductDetails() {
     );
   }
 
-  const images = product.images?.length
-    ? product.images
-    : [product.image];
+  // ✅ MERGE MAIN IMAGE + GALLERY IMAGES
+  const images = [
+    product.image,
+    ...(product.images || [])
+  ];
 
   const [activeImage, setActiveImage] = useState(images[0]);
 
+  // ✅ DISCOUNT CALCULATION
   const discount =
     product.salesPrice &&
     Math.round(
@@ -36,7 +39,7 @@ export default function ProductDetails() {
   return (
     <div className="max-w-5xl mx-auto mt-20 px-4 pb-32">
       <div className="grid md:grid-cols-2 gap-10">
-        {/* LEFT - IMAGES */}
+        {/* ================= LEFT : IMAGES ================= */}
         <div>
           {/* MAIN IMAGE */}
           <div className="bg-gray-100 rounded-xl overflow-hidden mb-4">
@@ -53,7 +56,7 @@ export default function ProductDetails() {
               <button
                 key={index}
                 onClick={() => setActiveImage(img)}
-                className={`h-20 w-20 rounded-lg overflow-hidden border-2 ${
+                className={`h-20 w-20 rounded-lg overflow-hidden border-2 transition ${
                   activeImage === img
                     ? "border-black"
                     : "border-transparent"
@@ -61,7 +64,7 @@ export default function ProductDetails() {
               >
                 <img
                   src={img}
-                  alt="thumbnail"
+                  alt={`thumbnail-${index}`}
                   className="h-full w-full object-cover"
                 />
               </button>
@@ -69,13 +72,13 @@ export default function ProductDetails() {
           </div>
         </div>
 
-        {/* RIGHT - DETAILS */}
+        {/* ================= RIGHT : DETAILS ================= */}
         <div>
           <h1 className="text-3xl font-bold text-gray-800">
             {product.productName}
           </h1>
 
-          {/* PRICE SECTION */}
+          {/* PRICE */}
           <div className="mt-4 flex items-center gap-3">
             <span className="text-3xl font-bold text-green-600">
               ₹{product.salesPrice || product.price}
@@ -94,7 +97,22 @@ export default function ProductDetails() {
             )}
           </div>
 
-          <button className="mt-8 w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 transition">
+          {/* STOCK */}
+          <p className="mt-4 text-sm text-gray-600">
+            {product.stock > 0
+              ? `In stock (${product.stock} available)`
+              : "Out of stock"}
+          </p>
+
+          {/* BUTTON */}
+          <button
+            className={`mt-8 w-full py-3 rounded-lg text-white transition ${
+              product.stock > 0
+                ? "bg-black hover:bg-gray-800"
+                : "bg-gray-400 cursor-not-allowed"
+            }`}
+            disabled={product.stock === 0}
+          >
             Add to Cart
           </button>
         </div>
