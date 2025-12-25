@@ -66,7 +66,7 @@ export const getCart = () => async (dispatch) => {
       },
     })
     .then((res) => {
-      dispatch(cartSlice.actions.getCartItemsSuccess(res.data.cart));
+      dispatch(cartSlice.actions.getCartItemsSuccess(res.data.cart.items));
     })
     .catch((error) => {
       dispatch(cartSlice.actions.getCartItemsFailed(error.response.data.message));
