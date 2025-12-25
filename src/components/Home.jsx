@@ -22,7 +22,7 @@ export default function Home() {
   }
 
   return (
-    <div className="mt-10 px-4">
+    <div className="mt-10 px-4 pb-40">
       <h1 className="text-3xl font-bold text-center mb-8">
         Our Products
       </h1>
