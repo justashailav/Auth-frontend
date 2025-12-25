@@ -1,9 +1,11 @@
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
+import { addToCart } from "../store/slices/cartSlice";
 
 export default function ProductDetails() {
   const { id } = useParams();
+  const dispatch = useDispatch();
 
   const { productList = [] } = useSelector(
     (state) => state.products
@@ -24,7 +26,7 @@ export default function ProductDetails() {
   // ✅ MERGE MAIN IMAGE + GALLERY IMAGES
   const images = [
     product.image,
-    ...(product.images || [])
+    ...(product.images || []),
   ];
 
   const [activeImage, setActiveImage] = useState(images[0]);
@@ -36,12 +38,24 @@ export default function ProductDetails() {
       ((product.price - product.salesPrice) / product.price) * 100
     );
 
+  // ✅ ADD TO CART HANDLER
+  const handleAddToCart = () => {
+    dispatch(
+      addToCart({
+        _id: product._id,
+        productName: product.productName,
+        price: product.salesPrice || product.price,
+        image: product.image,
+        stock: product.stock,
+      })
+    );
+  };
+
   return (
     <div className="max-w-5xl mx-auto mt-20 px-4 pb-32">
       <div className="grid md:grid-cols-2 gap-10">
-        {/* ================= LEFT : IMAGES ================= */}
+        {/* LEFT : IMAGES */}
         <div>
-          {/* MAIN IMAGE */}
           <div className="bg-gray-100 rounded-xl overflow-hidden mb-4">
             <img
               src={activeImage}
@@ -50,7 +64,6 @@ export default function ProductDetails() {
             />
           </div>
 
-          {/* THUMBNAILS */}
           <div className="flex gap-3">
             {images.map((img, index) => (
               <button
@@ -72,7 +85,7 @@ export default function ProductDetails() {
           </div>
         </div>
 
-        {/* ================= RIGHT : DETAILS ================= */}
+        {/* RIGHT : DETAILS */}
         <div>
           <h1 className="text-3xl font-bold text-gray-800">
             {product.productName}
@@ -104,14 +117,15 @@ export default function ProductDetails() {
               : "Out of stock"}
           </p>
 
-          {/* BUTTON */}
+          {/* ADD TO CART BUTTON */}
           <button
+            onClick={handleAddToCart}
+            disabled={product.stock === 0}
             className={`mt-8 w-full py-3 rounded-lg text-white transition ${
               product.stock > 0
                 ? "bg-black hover:bg-gray-800"
                 : "bg-gray-400 cursor-not-allowed"
             }`}
-            disabled={product.stock === 0}
           >
             Add to Cart
           </button>
