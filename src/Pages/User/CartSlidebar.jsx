@@ -6,7 +6,7 @@ const CartSidebar = ({ isOpen, onClose }) => {
   const dispatch=useDispatch()
   const { cartItems} = useSelector((state) => state.cart);
   useEffect(()=>{
-    dispatch(getCart)
+    dispatch(getCart())
   },[dispatch])
   return (
     <>
