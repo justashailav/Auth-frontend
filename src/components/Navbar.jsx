@@ -16,9 +16,9 @@ const Navbar = () => {
         <div className="w-full px-4 sm:px-6">
           <div className="flex h-16 items-center max-w-6xl mx-auto justify-between">
             <Link to="/">
-              {/* <div className="text-white font-bold text-xl">
-                Auth<span className="text-indigo-400">UI</span>
-              </div> */}
+              <div className="text-white font-bold text-xl">
+                Shop<span className="text-indigo-400">flow</span>
+              </div>
             </Link>
 
             {/* DESKTOP */}
