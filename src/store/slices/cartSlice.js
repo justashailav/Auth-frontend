@@ -46,7 +46,7 @@ export const addCart = (product) => async (dispatch) => {
       { withCredentials: true }
     );
 
-    dispatch(cartSlice.actions.addToCartSuccess(res.data));
+    dispatch(cartSlice.actions.addToCartSuccess(res.data.cart.items));
   } catch (error) {
     dispatch(
       cartSlice.actions.addToCartFailed(
