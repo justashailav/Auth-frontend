@@ -34,8 +34,7 @@ export default function Home() {
   }
 
   return (
-    <div className="mt-16 px-4 max-w-7xl mx-auto">
-      {/* HEADING */}
+    <div className="mt-20 px-4 max-w-7xl mx-auto">
       <motion.h1
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -44,8 +43,6 @@ export default function Home() {
       >
         Our Products
       </motion.h1>
-
-      {/* PRODUCTS GRID */}
       <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {productList.map((product, index) => (
           <motion.div
@@ -58,7 +55,6 @@ export default function Home() {
           >
             <Link to={`/product/${product._id}`}>
               <div className="bg-white rounded-2xl shadow-md overflow-hidden transition-all duration-300 group-hover:shadow-xl">
-                {/* IMAGE */}
                 <div className="relative h-52 overflow-hidden bg-gray-100">
                   {product.image ? (
                     <img
