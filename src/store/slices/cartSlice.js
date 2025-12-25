@@ -19,13 +19,13 @@ const cartSlice = createSlice({
     addToCartFailed(state, action) {
       (state.loading = false), (state.error = action.payload);
     },
-    getCart(state) {
+    getCartItems(state) {
       (state.loading = true), (state.error = null);
     },
-    getCartSuccess(state, action) {
+    getCartSuccessItems(state, action) {
       (state.loading = false), (state.cartItems = action.payload);
     },
-    getCartFailed(state, action) {
+    getCartFailedItems(state, action) {
       (state.loading = false), (state.error = action.payload);
     },
   },
@@ -57,7 +57,7 @@ export const addCart = (product) => async (dispatch) => {
 };
 
 export const getCart = () => async (dispatch) => {
-  dispatch(cartSlice.actions.getCart());
+  dispatch(cartSlice.actions.getCartItems());
   await axios
     .get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/cart/getCart`, {
       withCredentials: true,
@@ -66,10 +66,10 @@ export const getCart = () => async (dispatch) => {
       },
     })
     .then((res) => {
-      dispatch(cartSlice.actions.getCartSuccess(res.data.cart));
+      dispatch(cartSlice.actions.getCartItemsSuccess(res.data.cart));
     })
     .catch((error) => {
-      dispatch(cartSlice.actions.getCartFailed(error.response.data.message));
+      dispatch(cartSlice.actions.getCartItemsFailed(error.response.data.message));
     });
 };
 

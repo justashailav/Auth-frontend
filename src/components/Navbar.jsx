@@ -15,8 +15,6 @@ const Navbar = () => {
       <nav className="fixed top-0 left-0 w-full z-50 bg-[#020617] border-b border-white/10">
         <div className="w-full px-4 sm:px-6">
           <div className="flex h-16 items-center max-w-6xl mx-auto justify-between">
-
-            {/* LOGO */}
             <Link to="/">
               <div className="text-white font-bold text-xl">
                 Auth<span className="text-indigo-400">UI</span>
