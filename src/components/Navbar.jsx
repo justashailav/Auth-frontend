@@ -5,30 +5,24 @@ import { useSelector } from "react-redux";
 const Navbar = () => {
   const [open, setOpen] = useState(false);
 
-  // 🔥 GET CART ITEMS FROM REDUX
-  const { cartItems = [] } = useSelector((state) => state.cart);
+  
+  const { cartItems } = useSelector((state) => state.cart);
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-[#020617] border-b border-white/10">
       <div className="w-full px-4 sm:px-6">
         <div className="flex h-16 items-center max-w-6xl mx-auto justify-between">
-          
-          {/* LOGO */}
+        
           <Link to="/">
             <div className="text-white font-bold text-xl">
               Auth<span className="text-indigo-400">UI</span>
             </div>
           </Link>
-
-          {/* DESKTOP */}
           <div className="hidden md:flex items-center gap-6">
-            {/* CART ICON */}
             <Link to="/cart" className="relative">
               <span className="text-gray-300 hover:text-white transition text-xl">
                 🛒
               </span>
-
-              {/* COUNT BADGE */}
               {cartItems.length > 0 && (
                 <span className="absolute -top-2 -right-2 bg-indigo-500 text-white text-xs font-semibold rounded-full h-5 w-5 flex items-center justify-center">
                   {cartItems.length}

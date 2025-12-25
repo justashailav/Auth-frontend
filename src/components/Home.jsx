@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 export default function Home() {
   const dispatch = useDispatch();
 
-  const { productList = [], loading } = useSelector(
+  const { productList, loading } = useSelector(
     (state) => state.products
   );
 
