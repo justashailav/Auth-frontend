@@ -9,6 +9,7 @@ import AdminLayout from "./Pages/Admin/AdminLayout";
 import AdminDashboard from "./Pages/Admin/AdminDashboard";
 import AdminProducts from "./Pages/Admin/Products";
 import Home from "./components/Home";
+import ProductDetails from "./components/ProductDetails";
 
 
 function App() {
@@ -28,7 +29,7 @@ function App() {
         <Route path="/otp-verification/:email" element={<VerifyOTP />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/password/reset/:token" element={<ResetPassword />} />
-
+        <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="products" element={<AdminProducts />} />
