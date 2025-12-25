@@ -38,18 +38,11 @@ export default function ProductDetails() {
       ((product.price - product.salesPrice) / product.price) * 100
     );
 
-  // ✅ ADD TO CART HANDLER
-  const handleAddToCart = () => {
-    dispatch(
-      addToCart({
-        _id: product._id,
-        productName: product.productName,
-        price: product.salesPrice || product.price,
-        image: product.image,
-        stock: product.stock,
-      })
-    );
-  };
+  // ✅ ADD TO CART HANDLER (FIXED)
+const handleAddToCart = () => {
+  dispatch(addToCart(product));
+};
+
 
   return (
     <div className="max-w-5xl mx-auto mt-20 px-4 pb-32">
