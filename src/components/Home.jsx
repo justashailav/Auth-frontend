@@ -23,19 +23,18 @@ export default function Home() {
   }
 
   return (
-    <div className="mt-10 px-4 pb-32">
+    <div className="mt-10 px-4">
       <h1 className="text-3xl font-bold text-center mb-8">
         Our Products
       </h1>
 
-      <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {productList.map((product) => (
-          <Link
+          <Link  to={`/product/${product._id}`}>
+            <div
             key={product._id}
-            to={`/product/${product._id}`}
-            className="bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden cursor-pointer"
+            className="bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden"
           >
-            {/* IMAGE */}
             <div className="h-48 bg-gray-100 flex items-center justify-center">
               {product.image ? (
                 <img
@@ -57,7 +56,12 @@ export default function Home() {
               <p className="text-green-600 font-bold text-xl mt-2">
                 ₹{product.price}
               </p>
+
+              <button className="mt-4 w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition">
+                View Product
+              </button>
             </div>
+          </div>
           </Link>
         ))}
       </div>
