@@ -144,5 +144,7 @@ export const deleteAddress = (id) => async (dispatch) => {
       )
     );
   }
+  
 };
+export const { selectAddress } = addressSlice.actions;
 export default addressSlice.reducer;
