@@ -6,6 +6,7 @@ import {
   removeCartItem,
 } from "../../store/slices/cartSlice";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const CartSidebar = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
@@ -121,8 +122,6 @@ const CartSidebar = ({ isOpen, onClose }) => {
                           </button>
                         </div>
                       </div>
-
-                      {/* REMOVE */}
                       <button
                         onClick={() => removeItem(item.product)}
                         className="text-red-500 text-lg hover:scale-110 transition"
@@ -136,14 +135,16 @@ const CartSidebar = ({ isOpen, onClose }) => {
             </div>
 
             {/* FOOTER */}
-            <div className="p-5 border-t">
+            <Link to="/checkout">
+              <div className="p-5 border-t">
               <button
                 disabled={cartItems.length === 0}
                 className="w-full bg-black text-white py-3 rounded-xl font-semibold hover:bg-gray-900 transition disabled:opacity-40"
               >
-                Buy Now
+                Checkout
               </button>
             </div>
+            </Link>
           </motion.div>
         </>
       )}
