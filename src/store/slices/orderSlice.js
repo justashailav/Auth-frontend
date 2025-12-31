@@ -87,6 +87,7 @@ export const verifyRazorpayPayment = (data) => async (dispatch) => {
     );
 
     dispatch(orderSlice.actions.verifyPaymentSuccess(res.data.order));
+    return res.data.order; 
   } catch (error) {
     dispatch(
       verifyPaymentFail(
