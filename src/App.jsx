@@ -12,6 +12,7 @@ import Home from "./components/Home";
 import ProductDetails from "./components/ProductDetails";
 import Checkout from "./Pages/User/Checkout";
 import OrderSuccess from "./Pages/User/orderSuccess";
+import MyOrders from "./Pages/User/MyOrders";
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/ordersuccess" element={<OrderSuccess />} />
+        <Route path="/orders" element={<MyOrders />} />
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="products" element={<AdminProducts />} />
