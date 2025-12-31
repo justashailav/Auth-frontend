@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCart } from "../../store/slices/cartSlice";
-import Address from "../Address/Address";
+import Address from "./Address";
 
 export default function Checkout() {
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ export default function Checkout() {
     <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-6 p-4">
       {/* ================= ADDRESS SECTION ================= */}
       <div>
-        <Address />
+        <Address/>
       </div>
 
       {/* ================= CART SUMMARY ================= */}
