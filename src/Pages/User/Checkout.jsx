@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAddresses, selectAddress } from "@/store/slices/addressSlice";
-import { getCart } from "@/store/slices/cartSlice";
+import { getAddresses } from "../../store/slices/addressSlice";
+import { getCart } from "../../store/slices/cartSlice";
+
 
 export default function Checkout() {
   const dispatch = useDispatch();
@@ -23,7 +24,6 @@ export default function Checkout() {
 
   return (
     <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-6">
-      {/* ================= ADDRESS SECTION ================= */}
       <div className="bg-white p-4 rounded shadow space-y-4">
         <h2 className="text-lg font-semibold">Delivery Address</h2>
 
@@ -34,7 +34,7 @@ export default function Checkout() {
         {addresses.map((addr) => (
           <div
             key={addr._id}
-            onClick={() => dispatch(selectAddress(addr))}
+            onClick={() => dispatch(selectedAddress(addr))}
             className={`border p-3 rounded cursor-pointer ${
               selectedAddress?._id === addr._id
                 ? "border-black bg-gray-50"
@@ -49,8 +49,6 @@ export default function Checkout() {
           </div>
         ))}
       </div>
-
-      {/* ================= CART SUMMARY (READ ONLY) ================= */}
       <div className="bg-white p-4 rounded shadow space-y-4">
         <h2 className="text-lg font-semibold">Order Summary</h2>
 
@@ -79,8 +77,6 @@ export default function Checkout() {
             </div>
           </div>
         ))}
-
-        {/* ================= TOTAL ================= */}
         {cartItems.length > 0 && (
           <>
             <div className="flex justify-between font-semibold text-lg">

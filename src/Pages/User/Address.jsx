@@ -1,12 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getAddresses,
-  addAddress,
-  updateAddress,
-  deleteAddress,
-  selectAddress,
-} from "@/store/slices/addressSlice";
+import { addAddress, deleteAddress, getAddresses, updateAddress } from "../../store/slices/addressSlice";
+
 
 const Address = () => {
   const dispatch = useDispatch();
