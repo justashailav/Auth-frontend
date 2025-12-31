@@ -4,8 +4,11 @@ import { getCart } from "../../store/slices/cartSlice";
 import { createOrder, verifyRazorpayPayment } from "../../store/slices/orderSlice";
 import Address from "./Address";
 
+import { useNavigate } from "react-router-dom";
+
 export default function Checkout() {
   const dispatch = useDispatch();
+  const navigate=useNavigate()
   const [paymentMethod, setPaymentMethod] = useState("COD");
 
   const { cartItems, loading: cartLoading } = useSelector(
@@ -41,7 +44,7 @@ export default function Checkout() {
 
       // ================= COD =================
       if (paymentMethod === "COD") {
-        alert("Order placed successfully (COD)");
+        navigate("/ordersuccess");
         return;
       }
 
@@ -54,13 +57,12 @@ export default function Checkout() {
     }
   };
 
-  /* ================= RAZORPAY ================= */
   const openRazorpay = (order) => {
     const options = {
       key: import.meta.env.VITE_RAZORPAY_KEY_ID,
       amount: order.amount,
       currency: "INR",
-      name: "Your Store",
+      name: "Shopflow",
       description: "Order Payment",
       order_id: order.id,
       handler: function (response) {
@@ -71,7 +73,7 @@ export default function Checkout() {
             razorpay_signature: response.razorpay_signature,
           })
         );
-        alert("Payment successful");
+        navigate("/ordersuccess");
       },
       theme: { color: "#000" },
     };
