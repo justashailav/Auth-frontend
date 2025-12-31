@@ -8,6 +8,7 @@ const addressSlice = createSlice({
     error: null,
     message: null,
     addresses: [],
+    selectedAddress:null
   },
   reducers: {
     addressStart(state) {
