@@ -8,6 +8,7 @@ const Address = () => {
   const { addresses, selectedAddress, loading } = useSelector(
     (state) => state.address
   );
+  console.log(selectedAddress)
 
   const [form, setForm] = useState({
     fullName: "",
