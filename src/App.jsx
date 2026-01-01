@@ -13,6 +13,7 @@ import ProductDetails from "./components/ProductDetails";
 import Checkout from "./Pages/User/Checkout";
 import OrderSuccess from "./Pages/User/orderSuccess";
 import MyOrders from "./Pages/User/MyOrders";
+import OrderDetails from "./Pages/User/orderDetails";
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/ordersuccess" element={<OrderSuccess />} />
         <Route path="/orders" element={<MyOrders />} />
+        <Route path="/order-details" element={<OrderDetails />} />
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="products" element={<AdminProducts />} />
