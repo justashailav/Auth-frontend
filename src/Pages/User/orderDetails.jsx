@@ -2,45 +2,38 @@ import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 export default function OrderDetails() {
-  const { currentOrder, loading } = useSelector((state) => state.order);
+  const { currentOrder } = useSelector((state) => state.order);
 
-  if (loading) return <p>Loading...</p>;
-
-  // If page refresh → redirect safely
   if (!currentOrder) {
     return <Navigate to="/orders" />;
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-4 space-y-4">
+    <div className="max-w-5xl mx-auto p-4 space-y-6">
 
-      <div className="bg-white p-4 shadow rounded">
-        <h2 className="font-bold text-lg">
-          Order Placed Successfully 🎉
-        </h2>
-        <p className="text-sm text-gray-500">
-          Order ID: {currentOrder._id}
-        </p>
+      <h1 className="text-2xl font-bold">Order Details</h1>
+
+      <div className="bg-white p-4 rounded shadow">
+        <p><b>Order ID:</b> {currentOrder._id}</p>
+        <p><b>Status:</b> {currentOrder.orderStatus}</p>
+        <p><b>Payment:</b> {currentOrder.paymentMethod} • {currentOrder.paymentStatus}</p>
       </div>
 
-      <div className="bg-white p-4 shadow rounded">
-        <p>Status: <b>{currentOrder.orderStatus}</b></p>
-        <p>Payment: <b>{currentOrder.paymentStatus}</b></p>
-        <p>Method: <b>{currentOrder.paymentMethod}</b></p>
-      </div>
+      <div className="bg-white p-4 rounded shadow">
+        <h2 className="font-semibold mb-3">Items</h2>
 
-      <div className="bg-white p-4 shadow rounded">
-        <h3 className="font-semibold mb-2">Items</h3>
-
-        {currentOrder.items.map((item) => (
-          <div key={item._id} className="flex justify-between border-b py-2">
-            <span>{item.productName} × {item.quantity}</span>
-            <span>₹{item.price * item.quantity}</span>
+        {currentOrder.orderItems.map((item) => (
+          <div key={item.product} className="flex justify-between border-b py-3">
+            <div>
+              <p>{item.productName}</p>
+              <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
+            </div>
+            <p className="font-semibold">₹{item.price * item.quantity}</p>
           </div>
         ))}
       </div>
 
-      <div className="bg-white p-4 shadow rounded text-right font-bold">
+      <div className="text-right font-bold text-lg">
         Total: ₹{currentOrder.totalAmount}
       </div>
 

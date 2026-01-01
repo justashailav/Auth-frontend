@@ -52,6 +52,9 @@ const orderSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    setCurrentOrder(state, action) {
+      state.currentOrder = action.payload;
+    },
   },
 });
 
@@ -66,7 +69,7 @@ export const createOrder = (data) => async (dispatch) => {
     );
 
     dispatch(orderSlice.actions.createOrderSuccess(res.data));
-    return res.data; 
+    return res.data;
   } catch (error) {
     dispatch(
       orderSlice.actions.createOrderFail(
@@ -87,7 +90,7 @@ export const verifyRazorpayPayment = (data) => async (dispatch) => {
     );
 
     dispatch(orderSlice.actions.verifyPaymentSuccess(res.data.order));
-    return res.data.order; 
+    return res.data.order;
   } catch (error) {
     dispatch(
       verifyPaymentFail(
@@ -108,12 +111,10 @@ export const getMyOrders = () => async (dispatch) => {
     dispatch(orderSlice.actions.getOrdersSuccess(res.data.orders));
   } catch (error) {
     dispatch(
-      getOrdersFail(
-        error?.response?.data?.message || "Failed to fetch orders"
-      )
+      getOrdersFail(error?.response?.data?.message || "Failed to fetch orders")
     );
   }
 };
-
+export const { setCurrentOrder } = orderSlice.actions;
 
 export default orderSlice.reducer;

@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getMyOrders } from "../../store/slices/orderSlice";
+import { useNavigate } from "react-router-dom";
+import { getMyOrders, setCurrentOrder } from "../../store/slices/orderSlice";
 
 export default function MyOrders() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { orders, loading, error } = useSelector((state) => state.order);
 
@@ -38,9 +40,13 @@ export default function MyOrders() {
       {orders.map((order) => (
         <div
           key={order._id}
-          className="border rounded-lg p-4 bg-white shadow-sm space-y-4"
+          onClick={() => {
+            dispatch(setCurrentOrder(order));
+            navigate("/order-details");
+          }}
+          className="border rounded-lg p-4 bg-white shadow-sm space-y-4 cursor-pointer hover:shadow-md transition"
         >
-          {/* ===== ORDER HEADER ===== */}
+          {/* HEADER */}
           <div className="flex flex-wrap justify-between gap-4">
             <div>
               <p className="text-sm text-gray-500">Order ID</p>
@@ -49,19 +55,13 @@ export default function MyOrders() {
 
             <div>
               <p className="text-sm text-gray-500">Payment</p>
-              <p
-                className={`font-medium ${
-                  order.paymentStatus === "PAID"
-                    ? "text-green-600"
-                    : "text-yellow-600"
-                }`}
-              >
+              <p className="font-medium">
                 {order.paymentMethod} • {order.paymentStatus}
               </p>
             </div>
 
             <div>
-              <p className="text-sm text-gray-500">Order Status</p>
+              <p className="text-sm text-gray-500">Status</p>
               <p className="font-medium">{order.orderStatus}</p>
             </div>
 
@@ -71,8 +71,8 @@ export default function MyOrders() {
             </div>
           </div>
 
-          {/* ===== ORDER ITEMS ===== */}
-          <div className="space-y-3 border-t pt-4">
+          {/* ITEMS */}
+          <div className="border-t pt-4 space-y-3">
             {order.orderItems.map((item) => (
               <div key={item.product} className="flex gap-4">
                 <img
@@ -83,7 +83,7 @@ export default function MyOrders() {
 
                 <div className="flex-1">
                   <p className="font-medium">{item.productName}</p>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-500">
                     Qty: {item.quantity}
                   </p>
                 </div>
@@ -95,11 +95,9 @@ export default function MyOrders() {
             ))}
           </div>
 
-          {/* ===== FOOTER ===== */}
-          <div className="text-sm text-gray-500">
-            Placed on{" "}
-            {new Date(order.createdAt).toLocaleDateString()}
-          </div>
+          <p className="text-sm text-gray-500">
+            Placed on {new Date(order.createdAt).toLocaleDateString()}
+          </p>
         </div>
       ))}
     </div>
